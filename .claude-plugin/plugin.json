@@ -1,0 +1,13 @@
+{
+  "name": "promptdesk",
+  "version": "0.1.0",
+  "description": "Routes work to the right Claude model and role, writes prompts to documented best practice, and loads role personas with their own model defaults and constraints.",
+  "keywords": [
+    "prompts",
+    "model-selection",
+    "routing",
+    "personas",
+    "prompt-engineering"
+  ],
+  "license": "MIT"
+}

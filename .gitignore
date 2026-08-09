@@ -1,0 +1,4 @@
+.privacy-guard/denylist.local.json
+.privacy-guard/findings.json
+.DS_Store
+*.plugin
