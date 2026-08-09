@@ -5,48 +5,52 @@ description: >
   "I'm working as a coder / financier / lawyer / designer / analyst today",
   "switch to reviewer mode", "which model and skills should I use for finance
   work", or otherwise wants to adopt a working role with its own model defaults,
-  constraints and supporting skills. Also use on first install, or when the user
-  asks what personas are available or what skills would improve a persona.
+  constraints and supporting skills. Also use when the user asks what personas
+  are available.
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 # Act as
 
-Load a working persona: its pipeline role, model and effort defaults, standing
-constraints, and the installed skills that support it.
+Load a working persona: its pipeline role, model and effort defaults, and
+standing constraints. Draw on whatever skills the environment offers, without
+narrating the search.
 
-## Step 1 — Inventory the environment
+## Step 1 — Check what's available, silently
 
-Run this once per session, before adopting a persona, and always on the first
-invocation after install.
+Work out what the environment already offers, then say nothing about it.
 
-1. List the skills available in this environment (use `ListSkills`, or the
-   equivalent listing this environment provides).
-2. Read `${CLAUDE_PLUGIN_ROOT}/canon/personas.md`.
-3. Match each persona's suggested skills against what is actually installed.
-4. Record the result for the rest of the session so the inventory runs once.
+1. Read `${CLAUDE_PLUGIN_ROOT}/canon/personas.md` for the requested persona.
+2. Note which of its suggested skills are present in this environment — from the
+   skills already listed in context, or `ListSkills` if a check is genuinely
+   needed. Prefer what is already visible; do not call a listing tool just to
+   confirm something you can already see.
+3. Beyond the suggested list, consider whether any other available skill fits the
+   work at hand and use it. The suggestions in `personas.md` are a floor, not a
+   ceiling — a skill that suits the task counts even if no persona names it.
 
-Report the inventory compactly — a table of persona, skills found, skills missing.
-Do not dump the full skill list.
+**Do not print an inventory.** No table of personas and skills, no list of what is
+installed, no report of what is missing. This check is internal.
 
-If skills are missing for personas the user actually uses, offer them once via
-`SuggestSkills` (or name them in plain text if that tool is unavailable), then
-continue. Never block on a missing skill and never suggest the same gap twice in a
-session.
+**Do not call `SuggestSkills` unprompted.** Recommend installing something only
+when the user asks what would improve a persona, or when a missing skill actually
+blocks the work — and then in one plain sentence, once per session.
 
-If a persona's suggested skills are all absent, the persona still works — the
-model defaults and constraints are the substance; skills are an accelerant.
+Mention a skill only at the moment you use it, the way you would mention any other
+tool. A persona whose suggested skills are all absent still works: the model
+defaults and constraints are the substance, skills are an accelerant.
 
 ## Step 2 — Adopt the persona
 
 Read the persona's entry in `${CLAUDE_PLUGIN_ROOT}/canon/personas.md` and state
-back, in four lines:
+back, in three lines:
 
 - **Role** — the pipeline job being played
 - **Model and effort** — the default, plus the escalation target and its trigger
 - **Constraints** — the standing rules for this persona, listed
-- **Skills active** — installed ones that will be used; missing ones named once
+
+Nothing about skills here. Keep the adoption to what changes how the work is done.
 
 Then apply the constraints for the rest of the session, or until the user switches
 persona. Treat them as binding, not advisory.
@@ -88,9 +92,11 @@ default should be changed in `personas.md` rather than worked around each sessio
 
 ## Rules
 
-- Inventory once per session, not once per request.
-- Suggest a missing skill once, then drop it.
+- Never print an inventory of available or missing skills. The check is internal.
+- Use a fitting skill without announcing that you looked for one.
+- Suggest installing something only when asked, or when its absence blocks the
+  work — once per session, in one sentence.
 - Never invent a model fact, price or effort level.
-- Never claim a skill is installed without having seen it in the inventory.
+- Never claim a skill is available without having actually seen it.
 - State the persona's constraints out loud when adopting it, so the user can
   correct them before work starts.

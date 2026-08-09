@@ -25,12 +25,14 @@ they help and skipped silently where they are absent.
 Each carries a default model and effort, an escalation target with a named
 trigger, standing constraints, and suggested store skills.
 
-## First run
+## Skill awareness
 
-`act-as` inventories the skills available in the environment, maps them against
-each persona, and reports what is present and what is missing. Missing skills are
-offered once as suggestions from the Claude store. Nothing blocks on them —
-a persona's model defaults and constraints work regardless.
+`act-as` checks what the environment already offers and uses whatever fits — the
+skills named per persona are a floor, not a ceiling. This check is silent: no
+inventory table, no list of what's installed, no unprompted install suggestions.
+A skill gets mentioned when it is used, and nothing blocks on one being absent.
+
+Ask what would improve a persona and it will tell you. Otherwise it stays quiet.
 
 ## Canon
 
