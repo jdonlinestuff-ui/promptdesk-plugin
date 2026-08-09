@@ -8,7 +8,7 @@ description: >
   effort setting, and a role. Also use when the user is designing a multi-agent
   or multi-step pipeline and needs to know which model plays which part.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Prompt router
@@ -18,17 +18,27 @@ ready-to-paste system prompt for each unit of work.
 
 ## Before routing
 
-Read `${CLAUDE_PLUGIN_ROOT}/canon/model-reference.md`. It is the only source for
-model IDs, prices, effort levels, capabilities and constraints. Never state a
-model fact that is not in it.
+Read `${CLAUDE_PLUGIN_ROOT}/canon/models/INDEX.md` — the selection table, effort
+ladder and access filters. That is usually enough to shortlist.
 
-Check the `last_verified` date at the top of that file. If today is more than 90
-days later, tell the user the model facts may be stale and point them at
-`${CLAUDE_PLUGIN_ROOT}/canon/SOURCES.md` before they act on pricing, availability
-or compliance details.
+Then read **only** the detail files for models actually in contention:
+`${CLAUDE_PLUGIN_ROOT}/canon/models/<model-id>.md`. Loading all six on a routine
+route is waste; two or three is normal.
 
-Read `${CLAUDE_PLUGIN_ROOT}/canon/personas.md` when the task maps to a recognised
-working role, so manual persona use and automatic routing agree.
+These files are the only source for model IDs, prices, effort levels,
+capabilities and constraints. Never state a model fact that is not in them.
+
+Each carries an `expires` date. If today is on or after it, tell the user the
+model facts may be stale and point at `${CLAUDE_PLUGIN_ROOT}/canon/SOURCES.md`
+before they act on pricing, availability or compliance details.
+
+When the task maps to a recognised working role, read
+`${CLAUDE_PLUGIN_ROOT}/canon/personas/INDEX.md` and then the one persona file
+that fits, so manual persona use and automatic routing agree.
+
+Read `${CLAUDE_PLUGIN_ROOT}/canon/guardrails.md` before writing any system
+prompt — it holds the model-specific traps, which the model detail files
+deliberately do not repeat.
 
 ## Procedure
 
@@ -62,8 +72,8 @@ working role, so manual persona use and automatic routing agree.
    them as separate calls with separate system prompts. One call wearing two hats
    produces worse output than two focused calls.
 
-7. **Write each role's system prompt**, applying that model's `<prompting>` rules
-   from the canon plus the architecture in
+7. **Write each role's system prompt**, applying that model's prompting rules
+   from its detail file, plus the architecture in
    `${CLAUDE_PLUGIN_ROOT}/canon/prompt-architecture.md` and the traps in
    `${CLAUDE_PLUGIN_ROOT}/canon/guardrails.md`.
 
@@ -125,7 +135,9 @@ assignment is a hypothesis until it runs.
 - One model per unit of work. Do not hedge between two.
 - Never recommend a larger model without naming a concrete capability the smaller
   one lacks for this task. If none can be named, recommend the smaller one.
-- Never invent a model, ID, price or effort level absent from the canon.
+- Never invent a model, ID, price or effort level absent from the canon. If a fact
+  is not in the index or the detail file you read, read the detail file rather
+  than filling the gap from memory.
 - If the user's available models differ from the canon, work with theirs and name
   the closest substitute for anything missing.
 - Never assign a model the user cannot access. Access, retention posture and

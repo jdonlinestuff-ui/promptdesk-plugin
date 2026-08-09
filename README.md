@@ -23,7 +23,16 @@ they help and skipped silently where they are absent.
 `writer`, `facilitator`.
 
 Each carries a default model and effort, an escalation target with a named
-trigger, standing constraints, and suggested store skills.
+trigger, standing constraints, and suggested store skills. One file per persona
+under `canon/personas/`, so adopting one reads one file rather than all fifteen.
+
+Ask for a persona that doesn't exist and `act-as` offers to build it instead of
+quietly using the nearest match: a four-question interview covering what it
+produces, which existing persona to inherit from, its always/never constraints,
+and any web pages or documents it should follow. References are fetched and
+distilled into constraints with sources and a verification date. A persona built
+this way lasts the session; keeping it means adding the file to the plugin source
+and reinstalling.
 
 ## Skill awareness
 
@@ -41,23 +50,34 @@ so they cannot drift apart:
 
 | File | Holds |
 |---|---|
-| `model-reference.md` | Model IDs, prices, specs, effort ladders, per-model prompting rules and constraints |
+| `models/INDEX.md` | Selection table, effort ladder, access and compliance filters |
+| `models/<model-id>.md` | One file per model: specs, strengths, effort defaults, prompting rules |
+| `personas/INDEX.md` | Persona table — name, role, model, effort |
+| `personas/<name>.md` | One file per persona |
 | `best-practices.md` | General prompting guidance |
 | `prompt-architecture.md` | The ten-component prompt structure |
-| `guardrails.md` | Hallucination and consistency techniques, plus per-model traps |
-| `personas.md` | Persona definitions |
+| `guardrails.md` | Hallucination and consistency techniques, and the **only** copy of the per-model traps |
 | `SOURCES.md` | Every source URL, what it governs, and known gaps |
 
-Each canon file carries a `last_verified` date. When a file is more than 90 days
-old, the skills warn before relying on it and point at `SOURCES.md` for
-re-verification. Model facts go stale — this is the mechanism that surfaces it
-rather than letting an outdated table quietly become the source of truth.
+Everything is split so a skill reads what it needs and nothing else — routing
+between two models reads two model files, not six; adopting one persona reads one
+file, not fifteen.
+
+The per-model traps live in exactly one place. Model files point at
+`guardrails.md` rather than restating them, because a rule stored twice eventually
+disagrees with itself.
+
+Each canon file carries `last_verified` and an explicit `expires` date. On or
+after `expires`, the skills warn before relying on the file and point at
+`SOURCES.md` for re-verification. Model facts go stale — this surfaces it instead
+of letting an outdated table quietly become the source of truth.
 
 ## Adding or changing a persona
 
-Personas are plain markdown entries in `canon/personas.md`. Add a heading, a model
-default, an escalation trigger, constraints and suggested skills. No code change,
-no rebuild of the skills.
+Add `canon/personas/<name>.md` — frontmatter, role, model and effort, escalation
+trigger, constraints, suggested skills — and a row in `canon/personas/INDEX.md`.
+No code change, no rebuild of the skills. Or let `act-as` interview you and write
+it.
 
 ## Setup
 

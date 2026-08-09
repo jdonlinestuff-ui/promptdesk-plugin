@@ -1,3 +1,8 @@
+---
+last_verified: 2026-08-09
+expires: 2026-11-07
+---
+
 # Sources
 
 Every model fact and prompting rule in `canon/` traces to one of these pages.
@@ -34,8 +39,8 @@ against these pages.
 ## Known gaps
 
 - No dedicated prompting guide exists for Claude Haiku 4.5 among these sources.
-  Its entry in `model-reference.md` derives from the general best-practices page
-  and is marked as inferred.
+  Its entry in `models/claude-haiku-4-5.md` derives from the general
+  best-practices page and is marked as inferred.
 - The model-selection page lists no pricing for Sonnet 5 or Haiku 4.5.
 
 ## Re-verification

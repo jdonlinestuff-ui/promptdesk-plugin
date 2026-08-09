@@ -1,5 +1,6 @@
 ---
 last_verified: 2026-08-09
+expires: 2026-11-07
 governed_by: [claude-prompting-best-practices]
 ---
 

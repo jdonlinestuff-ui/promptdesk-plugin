@@ -1,14 +1,15 @@
 ---
 name: prompt-author
 description: >
-  This skill should be used when the user asks to "write a prompt", "improve this
-  prompt", "review my prompt", "why isn't this prompt working", "make this prompt
-  better", "lint this prompt", "turn this into a system prompt", or wants a
-  reusable prompt built to documented best practice. Also use when a prompt is
-  being written for a specific Claude model and needs checking against that
-  model's known traps.
+  This skill should be used when the user asks to "write a prompt", "rewrite this
+  prompt", "improve this prompt", "review my prompt", "why isn't this prompt
+  working", "make this prompt better", or "lint this prompt", or wants a reusable
+  prompt built to documented best practice. Also use when a prompt is being
+  written for a specific Claude model and needs checking against that model's
+  known traps. For choosing which model a task should run on, and generating the
+  system prompt that comes with that assignment, use prompt-router instead.
 metadata:
-  version: "0.1.0"
+  version: "0.2.0"
 ---
 
 # Prompt author
@@ -22,11 +23,15 @@ Read these, in this order:
 1. `${CLAUDE_PLUGIN_ROOT}/canon/prompt-architecture.md` — the component order
 2. `${CLAUDE_PLUGIN_ROOT}/canon/best-practices.md` — the rules
 3. `${CLAUDE_PLUGIN_ROOT}/canon/guardrails.md` — hallucination, consistency, and
-   the per-model traps
-4. `${CLAUDE_PLUGIN_ROOT}/canon/model-reference.md` — only when a target model is
-   named or needs choosing
+   the per-model traps. This is the sole home of the traps; model files do not
+   repeat them.
 
-Check `last_verified` in each. If today is more than 90 days later, say so before
+Read a model's detail file — `${CLAUDE_PLUGIN_ROOT}/canon/models/<model-id>.md` —
+only for the one target model, and only when its behaviour matters to the prompt.
+Start from `${CLAUDE_PLUGIN_ROOT}/canon/models/INDEX.md` if the ID is not yet known.
+Never load the whole model set to check one prompt.
+
+Each file carries an `expires` date. If today is on or after it, say so before
 relying on the content, and point at `${CLAUDE_PLUGIN_ROOT}/canon/SOURCES.md`.
 
 If no target model is known, ask which model the prompt runs on — or, when the
@@ -100,7 +105,7 @@ Check only those matching the target model. Each is a **blocker**.
     config must enable adaptive thinking.
 24. **Fable 5 / Mythos 5** — if the caller requires zero data retention, the target
     is invalid; both are Covered Models on 30-day retention.
-25. **Any model** — every model ID mentioned appears in `model-reference.md`.
+25. **Any model** — every model ID mentioned appears in `canon/models/INDEX.md`.
 
 ### Freshness
 
