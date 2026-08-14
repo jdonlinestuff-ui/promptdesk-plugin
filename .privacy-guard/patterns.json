@@ -9,7 +9,10 @@
     { "id": "gdrive-id-param", "category": "confidential", "regex": "id=[A-Za-z0-9_\\-]{25,}", "replace": "id=<FILE_ID>" },
     { "id": "gdrive-id-path", "category": "confidential", "regex": "/d/[A-Za-z0-9_\\-]{25,}", "replace": "/d/<FILE_ID>" },
     { "id": "local-path", "category": "local-path", "regex": "(?:[A-Za-z]:\\\\Users\\\\[^\\s\"'<>|]+|/(?:Users|home|mnt|sessions)/[^\\s\"'<>|]+)", "replace": "<PATH>",
-      "allow": ["re:/mnt/user-data", "re:/home/user\\b"] }
+      "allow": ["re:/mnt/user-data", "re:/home/user\\b"] },
+    { "id": "third-party-url", "category": "policy", "files": "^(canon|skills)/",
+      "regex": "https?://[^\\s)\\]>\"'`|]+", "replace": "[LINK REMOVED — cite canon/SOURCES.md]",
+      "allow": ["re:^https://(?:platform|docs|www)\\.(?:claude|anthropic)\\.com/", "re:^https://(?:claude|anthropic)\\.com/"] }
   ],
 
   "denylist": [],

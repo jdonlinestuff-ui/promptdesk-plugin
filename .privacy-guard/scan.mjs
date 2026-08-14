@@ -104,7 +104,10 @@ const MAX_LINE = 5000; // cap regex work on pathological minified lines
 function compileRules(cfg){
   return (cfg.rules||[]).map(r=>{
     let re; try { re = new RegExp(r.regex, (r.flags||'').includes('g') ? r.flags : (r.flags||'')+'g'); } catch { re = null; }
-    return re && { r, re, allow: makeAllow(r.allow) };
+    // optional `files`: rule only applies to paths matching it (forward-slash, repo-relative)
+    let files = null;
+    if (r.files){ try { files = new RegExp(r.files); } catch(e){ die('bad `files` regex on rule '+r.id+': '+e.message); } }
+    return re && { r, re, files, allow: makeAllow(r.allow) };
   }).filter(Boolean);
 }
 function compileDenies(cfg){
@@ -117,6 +120,8 @@ function compileDenies(cfg){
 }
 function scanFile(file, rules, denies, isAllowed){
   let content; try { content = fs.readFileSync(file,'utf8'); } catch { return []; }
+  const fpath = file.replace(/\\/g,'/');
+  const active = rules.filter(x => !x.files || x.files.test(fpath));
   const hits = [];
   const lines = content.split('\n');
   let base = 0;
@@ -132,7 +137,7 @@ function scanFile(file, rules, denies, isAllowed){
       hits.push({ file, line: li+1, col: m.index+1, start: lineBase+m.index, end: lineBase+m.index+text.length,
                   text, category, ruleId, replace, context: ctx });
     };
-    for (const {r, re, allow} of rules){
+    for (const {r, re, allow} of active){
       re.lastIndex = 0; let m;
       while ((m = re.exec(target)) !== null){
         if (!m[0]){ re.lastIndex++; continue; }

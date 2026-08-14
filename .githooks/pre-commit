@@ -4,6 +4,18 @@
 root="$(git rev-parse --show-toplevel)"
 scan="$root/.privacy-guard/scan.mjs"
 cfg="$root/.privacy-guard/patterns.json"
+
+# mode-guard: docs are never executable. Sessions on Windows/NTFS mounts can set the
+# exec bit on every file they write; core.fileMode=false hides that locally, so check
+# the index directly. Cheap, so it runs before the scan.
+exec_docs=$(git ls-files --stage -- '*.md' '*.json' | grep '^100755' | cut -f2)
+if [ -n "$exec_docs" ]; then
+  echo "mode-guard: commit blocked — these docs are marked executable (100755):"
+  echo "$exec_docs" | sed 's/^/  • /'
+  echo "  fix: git update-index --chmod=-x <file>   (then re-commit)"
+  exit 1
+fi
+
 [ -f "$scan" ] || exit 0   # guard not installed here
 if ! node "$scan" scan --staged --config "$cfg"; then
   echo ""
