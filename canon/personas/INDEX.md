@@ -25,6 +25,7 @@ Do not read every persona file to use one.
 | `triage` | Classifier | `claude-haiku-4-5` | — |
 | `writer` | Drafter | `claude-sonnet-5` | high |
 | `facilitator` | Synthesiser | `claude-sonnet-5` | medium |
+| `chief-human-resource-officer` | Roster curator | `claude-opus-5` | high |
 
 Model defaults are starting points, not verdicts. Benchmarking on the user's
 own prompts and data is the deciding step.

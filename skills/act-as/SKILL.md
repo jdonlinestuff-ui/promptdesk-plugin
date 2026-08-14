@@ -107,10 +107,14 @@ asked together, not one at a time.
    or files.
 
 If they supply references, fetch or read them, then distil into the persona:
-standing constraints for rules the persona must follow, and a `sources` list with
-URLs and a `last_verified` date. Quote or cite rather than paraphrasing from
-memory — a persona built on a half-remembered standard is worse than no persona.
-Do not bulk-copy a document into the file; extract the rules that change behaviour.
+standing constraints for rules the persona must follow, and a short **grounding**
+note with a `last_verified` date. Quote or cite from the reference while drafting
+so the constraints trace to something real — a persona built on a
+half-remembered standard is worse than no persona — but do not retain the
+third-party URL in the committed file: this repo is public and does not embed
+external links in shipped content (`.privacy-guard/POLICY.md`). Cite sources in
+conversation with the requester instead. Do not bulk-copy a document into the
+file; extract the rules that change behaviour.
 
 Propose a model and effort from the work description using
 `${CLAUDE_PLUGIN_ROOT}/canon/models/INDEX.md`, name an escalation target and its

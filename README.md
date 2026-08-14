@@ -15,12 +15,13 @@ they help and skipped silently where they are absent.
 | `prompt-router` | "which model should I use", "route this task", "should this be Haiku or Sonnet", "what effort level" | A model, effort and role per unit of work, plus a ready-to-paste system prompt for each |
 | `prompt-author` | "write a prompt", "review my prompt", "why isn't this prompt working", "lint this" | A prompt built to the ten-component architecture, or a numbered findings table with severities and fixes |
 | `act-as` | "act as a financier", "put on my coder hat", "switch to reviewer mode" | Persona adopted: role, model and effort defaults, standing constraints, and which supporting skills are installed |
+| `assemble-team` | "put a team together", "assemble a team to review/design X", "run this past a panel", "have the roster look at this" | A cast of personas with drafted, confirmed prompts, dispatched as subagents, and a synthesized report attributing each finding to its seat |
 
 ## Personas
 
 `coder`, `architect`, `reviewer`, `debugger`, `agent-runner`, `financier`,
 `legal`, `product`, `marketer`, `designer`, `analyst`, `researcher`, `triage`,
-`writer`, `facilitator`.
+`writer`, `facilitator`, `chief-human-resource-officer`.
 
 Each carries a default model and effort, an escalation target with a named
 trigger, standing constraints, and suggested store skills. One file per persona
